@@ -11,6 +11,7 @@ import static piestimation.utils.MathExt.random;
 
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.LongAdder;
 
 import piestimation.utils.PointPozCheckTasks;
 
@@ -28,7 +29,7 @@ public class PiEstimation {
 	 * threads from the {@code ForkJoin} pool. By using {@code AtomicInteger}, we
 	 * make sure that the increment operation in carried out in a thread-safe manor.
 	 */
-	private final static AtomicInteger totalPointsInCircle = new AtomicInteger(0);
+	private final static LongAdder totalPointsInCircle = new LongAdder();
 
 	/**
 	 * Computes a {@code Point} that lies between the -{@code radius} and
@@ -57,7 +58,7 @@ public class PiEstimation {
 			// Check if the point lies inside the circle and increment the
 			// totalPointsInCircle
 			if (new Point(xPoz, yPoz).isInsideCircle(radius)) {
-				totalPointsInCircle.incrementAndGet();
+				totalPointsInCircle.increment();
 			}
 		}
 	}
